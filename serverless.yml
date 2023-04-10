@@ -1,0 +1,26 @@
+service: event-101-producer-ci-cd
+
+frameworkVersion: '3'
+
+package:
+  individually: true
+  excludeDevDependencies: true
+  patterns:
+    - "!*/**"
+
+provider:
+  name: aws
+  runtime: python3.9
+
+
+functions:
+  app:
+    handler: app.main.handler
+    package:
+      patterns:
+        - "app/*"
+    events:
+      - httpApi: '*'
+
+plugins:
+  - serverless-python-requirements
