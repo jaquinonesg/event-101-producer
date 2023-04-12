@@ -1,9 +1,8 @@
-import json
-
 from .utils.logger import logger
 from .utils.database import insert_event_in_db
 from .utils.event_bus import sent_event_to_bus
 from .utils.metadata import add_metadata
+from .utils.response import (error_in_event_format, event_ingested_correctly)
 
 
 def ingest_event(event: dict, context: dict) -> dict:
@@ -11,19 +10,10 @@ def ingest_event(event: dict, context: dict) -> dict:
     # Check if the event is in the expected format
     
     if not isinstance(event, dict) or 'body' not in event:
-        error_msg = f'Event is not in expected format: {event}'
-        logger.error(error_msg)
-
-        return {
-            "statusCode": 400,
-            "body": json.dumps({"message": error_msg})
-        }
+        return error_in_event_format(event)
     
     filled_event = add_metadata(event['body'])
     insert_event_in_db(filled_event)
     sent_event_to_bus(filled_event)
 
-    return {
-        "statusCode": 200,
-        "body": json.dumps({"updated_event": filled_event})
-    }
+    return event_ingested_correctly(filled_event)
