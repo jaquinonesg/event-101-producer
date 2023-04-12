@@ -39,11 +39,12 @@ provider:
 
 functions:
 
-  create-users:
+  ingest-event:
     handler: ingest_event/handler.ingest_event
     package:
       patterns:
-        - "ingest_event/handler.py"
+        - "ingest_event/*"
+        - "ingest_event/utils/*"
     events:
       - http:
           path: ingest_event101
