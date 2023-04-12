@@ -13,7 +13,7 @@ def sent_event_to_bus(event: dict) -> None:
                 'Source': 'event101',
                 'DetailType': 'event101_type',
                 'Detail': json.dumps(event),
-                'EventBusName': 'CentralBroker'
+                'EventBusName': 'CentralBus'
             },
         ]
     )

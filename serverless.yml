@@ -8,6 +8,7 @@ package:
   patterns:
     - "!*/**"
 
+
 #This configures the dynamoDB resource in local
 custom:
   dynamodb:
@@ -20,6 +21,7 @@ custom:
       migrate: true
     # Uncomment only if you already have a DynamoDB running locally
     # noStart: true
+
 
 provider:
   name: aws
@@ -34,11 +36,10 @@ provider:
         - Effect: Allow
           Action:
             - "events:PutEvents"
-          Resource: "arn:aws:events:*:*:*"
+          Resource: 'arn:aws:events:us-east-1:357535579452:event-bus/CentralBus'
 
 
 functions:
-
   ingest-event:
     handler: ingest_event/handler.ingest_event
     package:
@@ -52,6 +53,7 @@ functions:
           request:
             schemas:
               application/json: ${file(schemas/event-101-schema.json)}
+
 
 resources:
   Resources:
@@ -68,7 +70,6 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-
 
 
 plugins:
