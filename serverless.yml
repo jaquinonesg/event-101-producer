@@ -8,19 +8,69 @@ package:
   patterns:
     - "!*/**"
 
+#This configures the dynamoDB resource in local
+custom:
+  dynamodb:
+  # If you only want to use DynamoDB Local in some stages, declare them here
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+    # Uncomment only if you already have a DynamoDB running locally
+    # noStart: true
+
 provider:
   name: aws
   runtime: python3.9
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 'dynamodb:*' #Allows to do everything, but you should restrict that
+          #! This has  to be changed everytime a new resource table is added?
+          Resource: arn:aws:dynamodb:us-east-1:357535579452:table/event101Table
+        - Effect: Allow
+          Action:
+            - "events:PutEvents"
+          Resource: "arn:aws:events:*:*:*"
 
 
 functions:
-  app:
-    handler: app.main.handler
+
+  create-users:
+    handler: ingest_event/handler.ingest_event
     package:
       patterns:
-        - "app/*"
+        - "ingest_event/handler.py"
     events:
-      - httpApi: '*'
+      - http:
+          path: ingest_event101
+          method: POST
+          request:
+            schemas:
+              application/json: ${file(schemas/event-101-schema.json)}
+
+resources:
+  Resources:
+    event101Table:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: event101Table
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+
 
 plugins:
   - serverless-python-requirements
+  - serverless-dynamodb-local
+  - serverless-offline

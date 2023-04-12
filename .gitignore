@@ -127,6 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#Serverless framework
 node_modules
 .serverless/
 package-lock.json
+.dynamodb/

@@ -7,3 +7,8 @@ pip install -r requirements.txt
 
 # Run test
 pytest
+
+
+# Deploy
+serverless plugin install -n serverless-python-requirements
+serverless deploy

@@ -1,0 +1,72 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "producer_id": {
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "sent_by": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "addres": {
+                            "type": "string"
+                        },
+                        "city": {
+                            "type": "string"
+                        },
+                        "country": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "addres",
+                        "city",
+                        "country"
+                    ]
+                },
+                "sent_to": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "addres": {
+                            "type": "string"
+                        },
+                        "city": {
+                            "type": "string"
+                        },
+                        "country": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "addres",
+                        "city",
+                        "country"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "sent_by",
+                "sent_to"
+            ]
+        }
+    },
+    "required": [
+        "producer_id",
+        "data"
+    ]
+}
