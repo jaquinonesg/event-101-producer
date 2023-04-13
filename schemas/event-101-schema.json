@@ -5,6 +5,9 @@
         "producer_id": {
             "type": "string"
         },
+        "event_type": {
+            "type": "string"
+        },
         "data": {
             "type": "object",
             "properties": {
