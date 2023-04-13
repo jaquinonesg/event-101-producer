@@ -9,20 +9,6 @@ package:
     - "!*/**"
 
 
-#This configures the dynamoDB resource in local
-custom:
-  dynamodb:
-  # If you only want to use DynamoDB Local in some stages, declare them here
-    stages:
-      - dev
-    start:
-      port: 8000
-      inMemory: true
-      migrate: true
-    # Uncomment only if you already have a DynamoDB running locally
-    # noStart: true
-
-
 provider:
   name: aws
   runtime: python3.9
@@ -30,8 +16,7 @@ provider:
     role:
       statements:
         - Effect: Allow
-          Action: 'dynamodb:*' #Allows to do everything, but you should restrict that
-          #! This has  to be changed everytime a new resource table is added?
+          Action: 'dynamodb:*'
           Resource: arn:aws:dynamodb:us-east-1:357535579452:table/event101Table
         - Effect: Allow
           Action:
@@ -74,5 +59,3 @@ resources:
 
 plugins:
   - serverless-python-requirements
-  - serverless-dynamodb-local
-  - serverless-offline

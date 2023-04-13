@@ -1,14 +1,13 @@
-#To run the project
+## Installation
 
-# Run in local
-python -m venv venv
-pip install -r requirements.txt
+Install `serverless` module via NPM:
 
+```bash
+npm install -g serverless
+```
 
-# Run test
-pytest
+## Deploy
 
-
-# Deploy
-serverless plugin install -n serverless-python-requirements
+```bash
 serverless deploy
+```
